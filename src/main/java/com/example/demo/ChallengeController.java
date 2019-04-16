@@ -9,6 +9,8 @@ public class ChallengeController {
 
     @RequestMapping("/challenge/wind/{zip}")
     public String wind(@PathVariable("zip") String zip) {
+		Wind w = new Wind(4.0, 50.0);
+		System.out.println(w);
         return "Greetings from Spring Boot!" + zip;
     }
 }
