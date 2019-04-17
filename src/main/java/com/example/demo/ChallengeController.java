@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,10 +10,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 public class ChallengeController {
 
-    @RequestMapping("/challenge/wind/{zip}")
+	@Autowired
+	WindService serv;
+
+    @RequestMapping("/api/v1/wind/{zip}")
     public String wind(@PathVariable("zip") String zip) {
-		Wind w = new Wind(4.0, 50.0);
-		System.out.println(w);
-        return "Greetings from Spring Boot!" + zip;
+		// validate zipcode
+
+        String json = "";
+		Wind w = serv.getByZipCode(zip);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            json = objectMapper.writeValueAsString(w);
+        } catch (JsonProcessingException e) {
+            // e.printStackTrace();
+        }
+        return json;
     }
 }

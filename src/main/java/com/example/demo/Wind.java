@@ -1,10 +1,10 @@
 package com.example.demo;
 
 class Wind {
-	private Double speed;
-	private Double direction;
+	private double speed;
+	private double direction;
 
-    public Wind(Double speed, Double direction) {
+    public Wind(double speed, double direction) {
         setSpeed(speed);
         setDirection(direction);
     }
@@ -14,23 +14,23 @@ class Wind {
         setDirection(0.0);
     }
 
-    public void setSpeed(Double speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
-    public void setDirection(Double direction) {
+    public void setDirection(double direction) {
         this.direction = direction;
     }
 
-    public Double getDirection() {
+    public double getDirection() {
         return direction;
     }
-    public Double getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
     @Override
     public String toString() {
-        return "Book{" + "speed='" + speed + '\'' + ", direction='" + direction + '\'' + '}';
+        return "Wind{" + "speed='" + speed + '\'' + ", direction='" + direction + '\'' + '}';
     }
 }
