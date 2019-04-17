@@ -10,15 +10,31 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 public class ChallengeController {
 
-	@Autowired
-	WindService serv;
+    @Autowired
+    WindService serv;
 
-    @RequestMapping("/api/v1/wind/{zip}")
+    @RequestMapping(value="/api/v1/wind/{zip}", produces={"application/json"})
     public String wind(@PathVariable("zip") String zip) {
-		// validate zipcode
+
+        // validate ZIP code
+        char[] charArr = zip.toCharArray();
+        for (char c : charArr) {
+            if(!Character.isDigit(c)) {
+                DemoApplication.log.warn("Non-digital zipcode.");
+                return "";
+            }
+        }
+        if (zip.length() > 5) {
+            DemoApplication.log.warn("Zipcode too large.");
+            return "";
+        }
+        if (zip.length() == 4) {
+            DemoApplication.log.info("Zipcode may be abbreviated.");
+            zip = "0" + zip;
+        }
 
         String json = "";
-		Wind w = serv.getByZipCode(zip);
+        Wind w = serv.getByZipCode(zip);
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             json = objectMapper.writeValueAsString(w);
