@@ -19,11 +19,17 @@ public class ChallengeController {
         // validate ZIP code
         char[] charArr = zip.toCharArray();
         for (char c : charArr) {
-            if(!Character.isDigit(c)) {
+            if(!(Character.isDigit(c) || c == '-')) {
                 DemoApplication.log.warn("Non-digital zipcode.");
                 return "";
             }
         }
+		
+		// Try to accommodate extended ZIP+4 input 
+		if ( charArr[ zip.length() - 5] == '-') {
+			zip = zip.substring(0, zip.length() - 5);
+		}
+
         if (zip.length() > 5) {
             DemoApplication.log.warn("Zipcode too large.");
             return "";
